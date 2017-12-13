@@ -10,7 +10,7 @@ import rmi.interfaces.IHeartBeatSubject;
 public class HeartBeatServer implements IHeartBeatObserver {
 	public static void main(String[] args) {
 		try {
-			IHeartBeatSubject hbsubject = (IHeartBeatSubject) Naming.lookup("//localhost/HeartBeat");
+			IHeartBeatSubject hbsubject = (IHeartBeatSubject) Naming.lookup("//localhost:8080/HeartBeat");
 			HeartBeatServer hbserver = new HeartBeatServer();
 			hbsubject.subscribeObject(hbserver);
 		} catch (Exception e){
