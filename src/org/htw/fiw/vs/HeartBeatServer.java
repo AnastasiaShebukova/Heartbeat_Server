@@ -3,10 +3,13 @@ package src.org.htw.fiw.vs;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 
-public class HeartBeatServer implements HeartBeatObserverInterface {
+import rmi.interfaces.IHeartBeatObserver;
+import rmi.interfaces.IHeartBeatSubject;
+
+public class HeartBeatServer implements IHeartBeatObserver {
 	public static void main(String[] args) {
 		try {
-			HeartBeatSubjectInterface hbsubject = (HeartBeatSubjectInterface) Naming.lookup("//localhost/HeartBeat");
+			IHeartBeatSubject hbsubject = (IHeartBeatSubject) Naming.lookup("//localhost/HeartBeat");
 			HeartBeatServer hbserver = new HeartBeatServer();
 			hbsubject.subscribeObject(hbserver);
 		} catch (Exception e){
@@ -15,10 +18,9 @@ public class HeartBeatServer implements HeartBeatObserverInterface {
 	}
 
 	@Override
-	public void update(Object observable, int heartbeat) throws RemoteException {
-		System.out.println("got heartrate:" + heartbeat);
-		//hier vielleicht dann lookup nach dem spotify service und entsprechende aktionen dort? würde dann aber bei jedem update eben neu
-		//aufgerufen werden.. bzw. gesucht. Oder das auch mit Observer pattern, dass wir dann hier das subject sind? 
+	public void update(int heartrate) throws RemoteException {
+		System.out.println("Got heartrate: " + heartrate);
+		
 	}
 }
 
